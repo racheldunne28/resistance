@@ -5,29 +5,58 @@ Created on Sat Nov 14 15:05:23 2020
 
 @author: rachel.dunne
 """
+import random
 
-def assign_players(number, players):
+players = ["ash", "alex", "maan", "rachel", "christian"]  
+    
+def input_players():
+    number = input("How many players are there?")
+    if type(number) is not int:
+        print("Invalid entry")
+        number = input("How many players are there?")
+    
+
+def assign_players(players):
     """ Assigns players as either resistance  or spies """
-    if players == 5:
+    number = len(players)
+    if number == 5:
         resistance = 3
         spies = 2
-    elif players == 6:
+    elif number == 6:
         resistance = 4
         spies = 2
-    elif players == 7:
+    elif number == 7:
         resistance = 4
         spies = 3
-    elif players == 8:
+    elif number == 8:
         resistance = 5
         spies = 3
-    elif players == 9:
+    elif number == 9:
         resistance = 6
         spies = 3
-    elif players == 10:
+    elif number == 10:
         resistance = 6
         spies = 4
     else:
         print("Invalid player number")
+    spy_players = []
+    resistance_players = []
+    for i in range(spies):
+        spy = random.choice(players)
+        spy_players.append(spy)
+        players.remove(spy)
+    for i in range(resistance):
+        resistance_person = random.choice(players)
+        resistance_players.append(resistance_person)
+        players.remove(resistance_person)
+    assignment = {"spies" : spy_players, "resistance" : resistance_players}
+    return(assignment)
     
-    
-    
+
+     
+
+
+def play_resistance(players):
+    """ Run the game """
+    print("Welcome to resistance")
+    input("")
