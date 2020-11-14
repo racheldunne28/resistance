@@ -57,10 +57,16 @@ def assign_players(players):
     return(assignment)
     
 
-     
-
 
 def play_resistance(players):
     """ Run the game """
     print("Welcome to resistance")
-    input("")
+    players = input_players()
+    assignment = assign_players(players)
+    return(assignment)
+    
+    
+    
+    
+    
+    
