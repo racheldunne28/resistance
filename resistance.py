@@ -10,10 +10,14 @@ import random
 players = ["ash", "alex", "maan", "rachel", "christian"]  
     
 def input_players():
-    number = input("How many players are there?")
+    number = int(input("How many players are there? "))
     if type(number) is not int:
         print("Invalid entry")
-        number = input("How many players are there?")
+        number = int(input("How many players are there? "))
+    players = []
+    for i in range(number):
+        players.append(input("Player" + str(i) +": "))
+    return(players)
     
 
 def assign_players(players):
