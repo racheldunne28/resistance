@@ -73,6 +73,12 @@ def choose_participants(number):
     return(participants)
     
 
+def get_entries(participants):
+    entries = {k:None for k in participants.values()}
+    for person in participants.values():
+        while entries[person] not in ["bad", "good"]:
+            entries[person] = input(f"{person}, what is your choice? (bad/good) ")
+    return entries
 
 
 def play_resistance():
@@ -87,6 +93,7 @@ def play_resistance():
     for i in range(5):
         print("Round", i+1, ":")
         participants = choose_participants(setup["rounds"][i])
+        entries = get_entries(participants)
     return(participants)
     
     
