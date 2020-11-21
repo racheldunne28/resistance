@@ -7,7 +7,6 @@ Created on Sat Nov 14 15:05:23 2020
 """
 import random
 
-players = ["ash", "alex", "maan", "rachel", "christian"]  
     
 def input_players():
     number = int(input("How many players are there? "))
@@ -63,14 +62,17 @@ def determine_roles_and_rounds(players):
              "rounds": rounds}
     return(setup)
     
+def parse_participants(s):
+    return s.split(", ")
 
-def choose_participants(number):
+def check_participants(participants_list, players):
+    # TODO
+    return True
+
+def choose_participants(number, players):
     print("This round requires ", number, " cards")
-    participants = {k:None for k in range(number)}
-    for i in range(number):
-        while participants[i] not in players:
-            participants[i] = input(f"Who will play this round? (Participant {i+1}) ")
-    return(participants)
+    response = input("Who will play this round? (comma separated)")
+    return parse_participants(response)
     
 
 def get_entries(participants):
@@ -80,20 +82,33 @@ def get_entries(participants):
             entries[person] = input(f"{person}, what is your choice? (bad/good) ")
     return entries
 
+def determine_round(entries, outcomes):
+    if "bad" in entries.values():
+        print("The spies won the round")
+        outcomes.append("spies")
+    else:
+        print("The resistance won the round")
+        outcomes.append("resistance")
+    return outcomes
+
 
 def play_resistance():
     """ Run the game """
     print("Welcome to resistance")
     players = input_players()
+    print(players)
     setup = determine_roles_and_rounds(players)
     print("This game has five rounds. A round fails if there is one bad card in the hand.")
     print("The number of cards in each round are: ")
     for i in range(5):
         print("Round", i+1, "=", setup["rounds"][i], "cards")
+    outcomes = []
     for i in range(5):
         print("Round", i+1, ":")
-        participants = choose_participants(setup["rounds"][i])
+        participants = choose_participants(setup["rounds"][i], players)
         entries = get_entries(participants)
+        outcomes = determine_round(entries, outcomes)
+    print(outcomes)
     return(participants)
     
     
