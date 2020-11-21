@@ -62,22 +62,18 @@ def determine_roles_and_rounds(players):
              "rounds": rounds}
     return(setup)
     
-def parse_participants(s):
-    return s.split(", ")
-
-def check_participants(participants_list, players):
-    # TODO
-    return True
 
 def choose_participants(number, players):
     print("This round requires ", number, " cards")
-    response = input("Who will play this round? (comma separated)")
-    return parse_participants(response)
+    participants = []
+    for i in range(number):
+        participants.append(input(f"Who will play this round? (Player {i+1}): "))
+    return participants
     
 
 def get_entries(participants):
-    entries = {k:None for k in participants.values()}
-    for person in participants.values():
+    entries = {k:None for k in participants}
+    for person in participants:
         while entries[person] not in ["bad", "good"]:
             entries[person] = input(f"{person}, what is your choice? (bad/good) ")
     return entries
@@ -110,9 +106,4 @@ def play_resistance():
         outcomes = determine_round(entries, outcomes)
     print(outcomes)
     return(participants)
-    
-    
-    
-    
-    
     
