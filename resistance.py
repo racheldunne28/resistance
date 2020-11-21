@@ -20,27 +20,33 @@ def input_players():
     return(players)
     
 
-def assign_players(players):
+def determine_roles_and_rounds(players):
     """ Assigns players as either resistance  or spies """
     number = len(players)
     if number == 5:
         resistance = 3
         spies = 2
+        rounds = [2,3,2,3,3]
     elif number == 6:
         resistance = 4
         spies = 2
+        rounds = [2,3,4,3,4]
     elif number == 7:
         resistance = 4
         spies = 3
+        rounds = [2,3,3,4,4]
     elif number == 8:
         resistance = 5
         spies = 3
+        rounds = [3,4,4,5,5]
     elif number == 9:
         resistance = 6
         spies = 3
+        rounds = [3,4,4,5,5]
     elif number == 10:
         resistance = 6
         spies = 4
+        rounds = [3,4,4,5,5]
     else:
         print("Invalid player number")
     spy_players = []
@@ -53,8 +59,13 @@ def assign_players(players):
         resistance_person = random.choice(players)
         resistance_players.append(resistance_person)
         players.remove(resistance_person)
-    assignment = {"spies" : spy_players, "resistance" : resistance_players}
-    return(assignment)
+    setup = {"spies" : spy_players, "resistance" : resistance_players,
+             "rounds": rounds}
+    return(setup)
+
+
+
+    
     
 
 
@@ -62,8 +73,9 @@ def play_resistance(players):
     """ Run the game """
     print("Welcome to resistance")
     players = input_players()
-    assignment = assign_players(players)
-    return(assignment)
+    setup = determine_roles_and_rounds(players)
+    
+    return(setup)
     
     
     
