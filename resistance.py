@@ -69,7 +69,7 @@ def choose_participants(number):
     participants = {k:None for k in range(number)}
     for i in range(number):
         while participants[i] not in players:
-            participants[i] = input("Who will play this round? (Participant ", i+1)
+            participants[i] = input(f"Who will play this round? (Participant {i+1}) ")
     return(participants)
     
 
@@ -84,7 +84,10 @@ def play_resistance():
     print("The number of cards in each round are: ")
     for i in range(5):
         print("Round", i+1, "=", setup["rounds"][i], "cards")
-    return()
+    for i in range(5):
+        print("Round", i+1, ":")
+        participants = choose_participants(setup["rounds"][i])
+    return(participants)
     
     
     
