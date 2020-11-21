@@ -16,7 +16,7 @@ def input_players():
         number = int(input("How many players are there? "))
     players = []
     for i in range(number):
-        players.append(input("Player" + str(i) +": "))
+        players.append(input("Player" + str(i+1) +": "))
     return(players)
     
 
@@ -64,6 +64,16 @@ def determine_roles_and_rounds(players):
     return(setup)
     
 
+def choose_participants(number):
+    print("This round requires ", number, " cards")
+    participants = {k:None for k in range(number)}
+    for i in range(number):
+        while participants[i] not in players:
+            participants[i] = input("Who will play this round? (Participant ", i+1)
+    return(participants)
+    
+
+
 
 def play_resistance():
     """ Run the game """
@@ -73,7 +83,7 @@ def play_resistance():
     print("This game has five rounds. A round fails if there is one bad card in the hand.")
     print("The number of cards in each round are: ")
     for i in range(5):
-        print("Round", i+1, setup["rounds"][i])
+        print("Round", i+1, "=", setup["rounds"][i], "cards")
     return()
     
     
