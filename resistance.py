@@ -62,20 +62,19 @@ def determine_roles_and_rounds(players):
     setup = {"spies" : spy_players, "resistance" : resistance_players,
              "rounds": rounds}
     return(setup)
-
-
-
-    
     
 
 
-def play_resistance(players):
+def play_resistance():
     """ Run the game """
     print("Welcome to resistance")
     players = input_players()
     setup = determine_roles_and_rounds(players)
-    
-    return(setup)
+    print("This game has five rounds. A round fails if there is one bad card in the hand.")
+    print("The number of cards in each round are: ")
+    for i in range(5):
+        print("Round", i+1, setup["rounds"][i])
+    return()
     
     
     
