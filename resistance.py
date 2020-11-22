@@ -7,15 +7,25 @@ Created on Sat Nov 14 15:05:23 2020
 """
 import random
 import os
-import PySimpleGUI27 as sg
+import PySimpleGUI as sg
 
 
 def input_player_number():
-    number = int(input("How many players are there? "))
-    if type(number) is not int:
-        print("Invalid entry")
-        number = int(input("How many players are there? "))
-    return number
+    layout = [[sg.Text("Player number:"), sg.InputOptionMenu([5,6,7,8,9,10], 
+                                                             key = "player_number")],
+              [sg.Button("Submit")], [sg.Button("Close")]]
+    window = sg.Window("Resistance", layout).read()
+    event = window[0]
+    values = window[1]
+    if event == "Submit":
+        player_number = int(values["player_number"])
+    if event == "Close" or event == sg.WIN_CLOSED:
+        window.close()
+  #  number = int(input("How many players are there? "))
+  #  if type(number) is not int:
+  #      print("Invalid entry")
+  #      number = int(input("How many players are there? "))
+    return player_number
 
  
 def input_players(player_number):
@@ -30,8 +40,9 @@ def input_players(player_number):
         if event == "Submit":
             player = values["player"]
             players.append(player)
-        if event == "Close":
-            window.Close()
+        if event == "Close" or event == sg.WIN_CLOSED:
+            break
+            window.close()
     return(players)
 
 
