@@ -7,7 +7,7 @@ Created on Sat Nov 14 15:05:23 2020
 """
 import random
 import os
-import PySimpleGUI as sg
+import PySimpleGUI27 as sg
 
 
 def input_player_number():
@@ -23,11 +23,15 @@ def input_players(player_number):
     for i in range(player_number):
         layout = [[sg.Text("Enter player details")], [sg.Text("Player name: "), 
                                                    sg.InputText("", key = "player")],
-              [sg.Button("Enter")]]
-        event, values= sg.Window("Demo", layout).read()
-        if event == "Enter":
+              [sg.Button("Submit")], [sg.Button("Close")]]
+        window = sg.Window("Resistance", layout).read()
+        event = window[0]
+        values = window[1]
+        if event == "Submt":
             player = values["player"]
             players.append(player)
+        if event == "Close":
+            window.Close()
     return(players)
 
 
