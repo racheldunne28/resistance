@@ -27,7 +27,7 @@ def input_players(player_number):
         window = sg.Window("Resistance", layout).read()
         event = window[0]
         values = window[1]
-        if event == "Submt":
+        if event == "Submit":
             player = values["player"]
             players.append(player)
         if event == "Close":
