@@ -7,17 +7,28 @@ Created on Sat Nov 14 15:05:23 2020
 """
 import random
 import os
+import PySimpleGUI as sg
 
 
-def input_players():
+def input_player_number():
     number = int(input("How many players are there? "))
     if type(number) is not int:
         print("Invalid entry")
         number = int(input("How many players are there? "))
+    return number
+
+ 
+def input_players(player_number):
     players = []
-    for i in range(number):
-        players.append(input("Player" + str(i + 1) + ": ").lower())
-    return players
+    for i in range(player_number):
+        layout = [[sg.Text("Enter player details")], [sg.Text("Player name: "), 
+                                                   sg.InputText("", key = "player")],
+              [sg.Button("Enter")]]
+        event, values= sg.Window("Demo", layout).read()
+        if event == "Enter":
+            player = values["player"]
+            players.append(player)
+    return(players)
 
 
 def determine_roles_and_rounds(players):
@@ -95,7 +106,8 @@ def determine_round(entries, outcomes):
 def play_resistance():
     """ Run the game """
     print("Welcome to resistance")
-    players = input_players()
+    player_number = input_player_number()
+    players = input_players(player_number)
     print(players)
     setup = determine_roles_and_rounds(players)
     print(
