@@ -16,7 +16,7 @@ def input_players():
         number = int(input("How many players are there? "))
     players = []
     for i in range(number):
-        players.append(input("Player" + str(i+1) +": "))
+        players.append(input("Player" + str(i+1) +": ").lower())
     return(players)
     
 
@@ -68,7 +68,7 @@ def choose_participants(number, players):
     print("This round requires ", number, " cards")
     participants = []
     for i in range(number):
-        participants.append(input(f"Who will play this round? (Player {i+1}): "))
+        participants.append(input(f"Who will play this round? (Player {i+1}): ").lower())
     return participants
     
 
