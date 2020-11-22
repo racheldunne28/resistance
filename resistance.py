@@ -6,6 +6,7 @@ Created on Sat Nov 14 15:05:23 2020
 @author: rachel.dunne
 """
 import random
+import os
 
     
 def input_players():
@@ -76,6 +77,7 @@ def get_entries(participants):
     for person in participants:
         while entries[person] not in ["bad", "good"]:
             entries[person] = input(f"{person}, what is your choice? (bad/good) ")
+            os.system("clear")
     return entries
 
 def determine_round(entries, outcomes):
