@@ -6,9 +6,12 @@ Created on Sat Nov 14 15:05:23 2020
 @author: rachel.dunne
 """
 import random
-import os
 import PySimpleGUI as sg
 
+#### TO DO
+#Sometimes says resistance has won even though a bad card played
+#Add a way of telling people which character they all are and letting the spies know who the others are
+#Allow to go back if input something wrong - maybe an 'are you sure?' message before properly submit.
 
 def input_player_number():
     layout = [[sg.Text("Player number:"), sg.InputOptionMenu([5,6,7,8,9,10], 
