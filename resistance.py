@@ -114,9 +114,17 @@ def choose_participants(number, players):
 def get_entries(participants):
     entries = {k: None for k in participants}
     for person in participants:
-        while entries[person] not in ["bad", "good"]:
-            entries[person] = input(f"{person}, what is your choice? (bad/good) ")
-            os.system("clear")
+        layout = [[sg.Text(f"{person}'s go:"), sg.Listbox(values=["Good", "Bad"],
+                                                          default_values=None, size=(10, 10),
+                                                             key = "entry")],
+              [sg.Button("Submit")], [sg.Button("Close")]]
+        window = sg.Window(title = "Resistance", layout =layout).read()
+        event = window[0]
+        values = window[1]
+        if event == "Submit":
+            entries[person] = values["entry"]
+        if event == "Close" or event == sg.WIN_CLOSED:
+            window.close()
     return entries
 
 
