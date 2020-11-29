@@ -85,7 +85,8 @@ def determine_roles_and_rounds(players):
         resistance_person = random.choice(players)
         resistance_players.append(resistance_person)
         players.remove(resistance_person)
-    setup = {"spies": spy_players, "resistance": resistance_players, "rounds": rounds}
+    players = [player for players in [spy_players, resistance_players] for player in players]
+    setup = {"spies": spy_players, "resistance": resistance_players, "rounds": rounds, "players": players}
     return setup
 
 
@@ -145,7 +146,7 @@ def play_resistance():
     outcomes = []
     for i in range(5):
         print("Round", i + 1, ":")
-        participants = choose_participants(setup["rounds"][i], players)
+        participants = choose_participants(setup["rounds"][i], setup["players"])
         entries = get_entries(participants)
         outcomes = determine_round(entries, outcomes)
     print(outcomes)
