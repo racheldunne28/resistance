@@ -91,12 +91,23 @@ def determine_roles_and_rounds(players):
 
 def choose_participants(number, players):
     print("This round requires ", number, " cards")
-    participants = []
+    participants = [] 
+    print(players)
+    print(participants)
     for i in range(number):
-        participants.append(
-            input(f"Who will play this round? (Player {i+1}): ").lower()
-        )
-    return participants
+        layout = [[sg.Text(f"Player {i+1}:"), sg.Listbox(values=players,default_values=None, size=(10, 10),
+                                                             key = "participant",)],
+              [sg.Button("Submit")], [sg.Button("Close")]]
+        window = sg.Window(title = "Resistance", layout =layout).read()
+        event = window[0]
+        values = window[1]
+        if event == "Submit":
+            participants.append(values["participant"])
+        if event == "Close" or event == sg.WIN_CLOSED:
+            window.close()
+    participants_final = [participant for sublist in participants for participant in sublist]
+   
+    return participants_final
 
 
 def get_entries(participants):
