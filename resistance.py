@@ -20,19 +20,14 @@ def input_player_number():
             sg.InputOptionMenu([5, 6, 7, 8, 9, 10], key="player_number"),
         ],
         [sg.Button("Submit")],
-        [sg.Button("Close")],
     ]
-    window = sg.Window("Resistance", layout).read()
-    event = window[0]
-    values = window[1]
+    window = sg.Window("Resistance", layout)
+    event, values = window.read()
     if event == "Submit":
         player_number = int(values["player_number"])
-    if event == "Close" or event == sg.WIN_CLOSED:
         window.close()
-    #  number = int(input("How many players are there? "))
-    #  if type(number) is not int:
-    #      print("Invalid entry")
-    #      number = int(input("How many players are there? "))
+    else:
+        raise Exception(f"Unknown event {event}")
     return player_number
 
 
@@ -40,20 +35,18 @@ def input_players(player_number):
     players = []
     for i in range(player_number):
         layout = [
-            [sg.Text("Enter player details")],
             [sg.Text("Player name: "), sg.InputText("", key="player")],
             [sg.Button("Submit")],
-            [sg.Button("Close")],
         ]
-        window = sg.Window("Resistance", layout).read()
-        event = window[0]
-        values = window[1]
+        window = sg.Window("Resistance", layout)
+        event, values = window.read()
         if event == "Submit":
             player = values["player"]
             players.append(player)
-        if event == "Close" or event == sg.WIN_CLOSED:
-            break
             window.close()
+        else:
+            raise Exception(f"Unknown event {event}")
+            
     return players
 
 
@@ -117,31 +110,35 @@ def reveal_characters(setup):
         elif player in setup["resistance"]:
             spy = False
             role = "Resistance"
+            
         layout = [
-            [sg.Text("".join(["Is this ", player, "?"]))],
-            [sg.Button("Yes")],
-            [sg.Button("Close")],
+            [sg.Text("We are about to reveal some secret information")],
+            [sg.Text(f"Please press show when only {player} is looking at the screen")],
+            [sg.Button("Show")],
         ]
-        window = sg.Window("Resistance", layout).read()
-        event = window[0]
-        values = window[1]
-        if event == "Yes":
+        window = sg.Window("Resistance", layout)
+        event, _ = window.read()
+        
+        if event == "Show":
+            window.close() # close previous window
+            
+            base_layout = [
+                [sg.Text(f"{player}, your role is {role}")],
+                # [sg.Text("This message will self-destruct in 10 seconds or you can press close below")],
+                [sg.Button("Close")],
+            ]
+            
             if spy:
-                layout = [
-                    [sg.Text("".join([player, ", your role is: ", role]))],
-                    [sg.Text("".join(["The spies are: ", " ".join(setup["spies"])]))],
-                    [sg.Button("Close")],
-                ]
+                other_spies = ', '.join([spy for spy in setup["spies"] if spy != player])
+                layout = [[sg.Text(f"The other {'spy is' if len(other_spies) == 1 else 'spies are'}: {other_spies}")]] + base_layout
             else:
-                layout = [
-                    [sg.Text("".join([player, ", your role is: ", role]))],
-                    [sg.Button("Close")],
-                ]
-        window = sg.Window("Resistance", layout).read()
-        event = window[0]
-        values = window[1]
-        if event == "Close" or event == sg.WIN_CLOSED:
-            continue
+                layout = base_layout
+                
+            window = sg.Window("Resistance", layout)
+            event, _ = window.read()
+        
+            if event == "Close":
+                window.close()
 
     return None
 
