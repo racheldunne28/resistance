@@ -9,7 +9,6 @@ import random
 import PySimpleGUI as sg
 
 #### TO DO
-# Sometimes says resistance has won even though a bad card played
 # Add a way of telling people which character they all are and letting the spies know who the others are
 # Allow to go back if input something wrong - maybe an 'are you sure?' message before properly submit.
 
