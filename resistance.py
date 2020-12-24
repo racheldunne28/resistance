@@ -108,6 +108,44 @@ def determine_roles_and_rounds(players):
     return setup
 
 
+def reveal_characters(setup):
+    for player in setup["players"]:
+      if player in setup["spies"]:
+          spy = True
+          role = "Spy"
+      elif player in setup["resistance"]:
+          spy = False
+          role = "Resistance"
+      layout = [
+            [sg.Text("".join(["Is this ", player, "?"]))],
+            [sg.Button("Yes")],
+            [sg.Button("Close")]
+            ]
+      window = sg.Window("Resistance", layout).read()
+      event = window[0]
+      values = window[1]
+      if event == "Yes":
+          if spy:
+           layout = [
+            [sg.Text("".join([player, ", your role is: ", role]))],
+            [sg.Text("".join(["The spies are: ", " ".join(setup["spies"])]))],
+            [sg.Button("Close")]
+            ]
+          else:
+            layout = [
+            [sg.Text("".join([player, ", your role is: ", role]))],
+            [sg.Button("Close")]
+            ]     
+      window = sg.Window("Resistance", layout).read()
+      event = window[0] 
+      values = window[1]
+      if event == "Close" or event == sg.WIN_CLOSED:
+         continue
+        
+    
+    return None
+
+
 def choose_participants(number, players):
     print("This round requires ", number, " cards")
     participants = []
@@ -190,6 +228,8 @@ def play_resistance():
     print("The number of cards in each round are: ")
     for i in range(5):
         print("Round", i + 1, "=", setup["rounds"][i], "cards")
+    print("Characters will now be revealed")
+    reveal_characters(setup)
     outcomes = []
     for i in range(5):
         print("Round", i + 1, ":")
@@ -197,4 +237,4 @@ def play_resistance():
         entries = get_entries(participants)
         outcomes = determine_round(entries, outcomes)
     print(outcomes)
-    return participants
+    return
