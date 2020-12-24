@@ -109,7 +109,8 @@ def determine_roles_and_rounds(players):
 
 
 def reveal_characters(setup):
-    for player in setup["players"]:
+    players = sorted(setup["players"])
+    for player in players:
         if player in setup["spies"]:
             spy = True
             role = "Spy"
