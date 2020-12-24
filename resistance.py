@@ -238,3 +238,7 @@ def play_resistance():
         outcomes = determine_round(entries, outcomes)
     print(outcomes)
     return
+
+
+if __name__ == "__main__":
+    play_resistance()
