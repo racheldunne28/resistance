@@ -110,39 +110,38 @@ def determine_roles_and_rounds(players):
 
 def reveal_characters(setup):
     for player in setup["players"]:
-      if player in setup["spies"]:
-          spy = True
-          role = "Spy"
-      elif player in setup["resistance"]:
-          spy = False
-          role = "Resistance"
-      layout = [
+        if player in setup["spies"]:
+            spy = True
+            role = "Spy"
+        elif player in setup["resistance"]:
+            spy = False
+            role = "Resistance"
+        layout = [
             [sg.Text("".join(["Is this ", player, "?"]))],
             [sg.Button("Yes")],
-            [sg.Button("Close")]
-            ]
-      window = sg.Window("Resistance", layout).read()
-      event = window[0]
-      values = window[1]
-      if event == "Yes":
-          if spy:
-           layout = [
-            [sg.Text("".join([player, ", your role is: ", role]))],
-            [sg.Text("".join(["The spies are: ", " ".join(setup["spies"])]))],
-            [sg.Button("Close")]
-            ]
-          else:
-            layout = [
-            [sg.Text("".join([player, ", your role is: ", role]))],
-            [sg.Button("Close")]
-            ]     
-      window = sg.Window("Resistance", layout).read()
-      event = window[0] 
-      values = window[1]
-      if event == "Close" or event == sg.WIN_CLOSED:
-         continue
-        
-    
+            [sg.Button("Close")],
+        ]
+        window = sg.Window("Resistance", layout).read()
+        event = window[0]
+        values = window[1]
+        if event == "Yes":
+            if spy:
+                layout = [
+                    [sg.Text("".join([player, ", your role is: ", role]))],
+                    [sg.Text("".join(["The spies are: ", " ".join(setup["spies"])]))],
+                    [sg.Button("Close")],
+                ]
+            else:
+                layout = [
+                    [sg.Text("".join([player, ", your role is: ", role]))],
+                    [sg.Button("Close")],
+                ]
+        window = sg.Window("Resistance", layout).read()
+        event = window[0]
+        values = window[1]
+        if event == "Close" or event == sg.WIN_CLOSED:
+            continue
+
     return None
 
 
