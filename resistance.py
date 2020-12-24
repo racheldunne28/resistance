@@ -169,7 +169,7 @@ def get_entries(participants):
 
 
 def determine_round(entries, outcomes):
-    if "bad" in entries.values():
+    if ["Bad"] in entries.values():
         print("The spies won the round")
         outcomes.append("spies")
     else:
