@@ -6,12 +6,12 @@ Created on Sat Nov 14 15:05:23 2020
 @author: rachel.dunne
 """
 import random
+from threading import Timer
 import PySimpleGUI as sg
 
 #### TO DO
 # Add a way of telling people which character they all are and letting the spies know who the others are
 # Allow to go back if input something wrong - maybe an 'are you sure?' message before properly submit.
-
 
 def input_player_number():
     layout = [
@@ -32,6 +32,9 @@ def input_player_number():
 
 
 def input_players(player_number):
+    # TODO REMOVE!
+    return ['a', 'b', 'c', 'd', 'e']
+    
     players = []
     for i in range(player_number):
         layout = [
@@ -110,7 +113,6 @@ def reveal_characters(setup):
         elif player in setup["resistance"]:
             spy = False
             role = "Resistance"
-            
         layout = [
             [sg.Text("We are about to reveal some secret information")],
             [sg.Text(f"Please press show when only {player} is looking at the screen")],
@@ -124,8 +126,8 @@ def reveal_characters(setup):
             
             base_layout = [
                 [sg.Text(f"{player}, your role is {role}")],
-                # [sg.Text("This message will self-destruct in 10 seconds or you can press close below")],
-                [sg.Button("Close")],
+                [sg.Button("Done", bind_return_key=True)],
+                [sg.Text("This message will self-destruct in 10 seconds or you can press close below")],
             ]
             
             if spy:
@@ -134,11 +136,25 @@ def reveal_characters(setup):
             else:
                 layout = base_layout
                 
-            window = sg.Window("Resistance", layout)
-            event, _ = window.read()
-        
-            if event == "Close":
-                window.close()
+            secret_window = sg.Window("Resistance", layout, return_keyboard_events=True)
+            
+            event, value= secret_window.read()
+            if event == "Done":
+                secret_window.close()
+            """
+            def callback():
+                
+                secret_window.close()
+                closed = True
+                
+            t = Timer(5.0, callback, ())
+            t.start()
+            while not closed:  
+                event, value = secret_window.read()
+                print(event)
+                if event == "Close":
+                    window.close()
+            """
 
     return None
 
